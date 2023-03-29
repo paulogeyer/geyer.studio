@@ -6,6 +6,8 @@ s2 = "0e0b213f26041e480b26217f27342e175d0e070a3c5b103e2526217f27342e175d0e077e26
 
 s3 = "73626960647f6b206821204f21254f7d694f7624662065622127234f726927756d"
 
+s4 = "foobar baz qux"
+
 function hex_to_bytes(str) {
   var res = [];
   for (var i = 0; i < str.length/2; i++) {
@@ -14,13 +16,8 @@ function hex_to_bytes(str) {
   return res;
 }
 
-function str_to_hex(str) {
-  res = "";
-  for(var i = 0; i < str.length; i++) {
-    
-  }
-
-  return res;
+function str_to_bytes(str) {
+  return str.split('').map(x => x.charCodeAt(0));
 }
 
 function bytes_to_str(bytes) {

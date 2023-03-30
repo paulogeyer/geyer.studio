@@ -68,12 +68,14 @@ k_bytes = OTR.str_to_bytes(k);
 // console.log(k_bytes);
 // console.log(OTR.bytes_to_str(OTR.decode(k_bytes, OTR.encode(k_bytes,s1_bytes))));
 
-console.log(OTR.hex_to_bytes(c1));
+// console.log(OTR.hex_to_bytes(c1));
 cypher = OTR.encode(OTR.str_to_bytes("secret"),
 		    OTR.str_to_bytes("my test message"), true)
 
-console.log(cypher);
-console.log(OTR.bytes_to_hex(cypher));
+// console.log(cypher);
+// console.log(OTR.bytes_to_hex(cypher));
 
 text = OTR.decode(OTR.str_to_bytes("secret"), cypher, true);
 console.log(OTR.bytes_to_str(text));
+
+

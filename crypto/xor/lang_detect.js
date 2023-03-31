@@ -6,27 +6,6 @@ class LangDetect {
     this.letter_percentage = letter_percentage;
     this.UPPER_LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     this.LETTERS_AND_SPACE = this.UPPER_LETTERS+this.UPPER_LETTERS.toLowerCase()+' \t\n';
-    this.ENGLISH_WORDS = this.load_dictionary("dict.txt");
-  }
-
-
-  load_dictionary(fname) {
-    const fs = require('fs');
-    var res = {};
-    var data = [];
-
-    try {
-      data = fs.readFileSync(fname, 'utf8');
-    } catch (err) {
-      console.error(err);
-    }
-
-    var lines = data.split("\n");
-
-    for(var i = 0; i < lines.length; i++)
-      res[lines[i].toUpperCase()] = true;
-
-    return res;
   }
 
   get_english_count() {
@@ -40,7 +19,7 @@ class LangDetect {
     var matches = 0;
 
     for(var i = 0; i < possible_words.length; i++)
-      if(this.ENGLISH_WORDS[possible_words[i]])
+      if(ENGLISH_WORDS[possible_words[i]])
 	matches++;
     
     return 1.0*matches/possible_words.length;
@@ -57,15 +36,19 @@ class LangDetect {
   }
 
   is_english() {
-    var words_match = this.get_english_count(this.msg) * 100 >= this.word_percentage;
     var num_letters = this.remove_non_letters(this.msg).split('').length;
     var message_letters_percentage = num_letters / this.msg.length * 100;
     var letters_match = message_letters_percentage >= this.letter_percentage;
+    if(!letters_match)
+      return false;
+
+    var words_match = this.get_english_count(this.msg) * 100 >= this.word_percentage;
 
     return words_match && letters_match;
   }
 }
 
+module.exports = LangDetect;
 
 // var test = new LangDetect("some test text");
 // var test1 = new LangDetect("SOME TEST TEXT");

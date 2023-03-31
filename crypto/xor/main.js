@@ -1,4 +1,5 @@
 
+const prompt = require("prompt-sync")();
 const LangDetect = require('./lang_detect');
 const OTR = require('./otr');
 const ENGLISH_WORDS = load_dictionary("dict.txt");
@@ -85,24 +86,34 @@ function bytes_to_str(bytes) {
 function brute_crack(c, max_size=10) {
   var cbytes = str_to_bytes(c);
 
-  for(var key_length = 3; key_length < max_size; key_length++) {
+  for(var key_length = 2; key_length < max_size; key_length++) {
     var kg = ks(key_length);
+    var counter = 0;
     console.log("key size: "+key_length);
 
     while(k = kg.next()) {
-      if(kg.done)
-	return
+      if(k.done)
+	break
 
-      var r = OTR.decode(k.value, cbytes, true);
+      try {
+	var r = OTR.decode(k.value, cbytes, true);
+      } catch {
+	console.log("error");
+	console.log(k);
+      }
       var rstr = bytes_to_str(r);
-      var rstr_is_english = new LangDetect(rstr).is_english();
+      var rstr_is_english = new LangDetect(rstr, ENGLISH_WORDS).is_english();
       if(rstr_is_english) {
-	console.log("found key: "+ks[kid]);
-	return true;
+	console.log("found key: "+k.value);
+	console.log("decrypted text: "+rstr);
+
+	// var input = prompt("ok?");
+	// if(input=="y")
+	//   return true;
       }
     }
 
   }
 }
 
-brute_crack(s1, 11);
+brute_crack(s2, 11);

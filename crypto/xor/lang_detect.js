@@ -1,11 +1,12 @@
 
 class LangDetect {
-  constructor(msg, word_percentage=20, letter_percentage=85) {
+  constructor(msg, ew, word_percentage=20, letter_percentage=85) {
     this.msg = msg;
     this.word_percentage = word_percentage;
     this.letter_percentage = letter_percentage;
     this.UPPER_LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     this.LETTERS_AND_SPACE = this.UPPER_LETTERS+this.UPPER_LETTERS.toLowerCase()+' \t\n';
+    this.ENGLISH_WORDS = ew;
   }
 
   get_english_count() {
@@ -19,7 +20,7 @@ class LangDetect {
     var matches = 0;
 
     for(var i = 0; i < possible_words.length; i++)
-      if(ENGLISH_WORDS[possible_words[i]])
+      if(this.ENGLISH_WORDS[possible_words[i]])
 	matches++;
     
     return 1.0*matches/possible_words.length;

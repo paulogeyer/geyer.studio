@@ -7,7 +7,32 @@ const f = (a, b) => [].concat(...a.map(d => b.map(e => [].concat(d, e))));
 const cartesian = (a, b, ...c) => (b ? cartesian(f(a, b), ...c) : a);
 const rangeOfNumbers = (a,b) => [...Array(b+1).keys()].slice(a);
 
-const nlst = rangeOfNumbers(0,255);
+function* ks(n) {
+  arr = new Array(n).fill(0);
+  arrl = arr.length;
+
+  yield arr;
+
+  while(arr[0] != 256) {
+    arr[arrl-1]++;
+
+    for(var i = 0; i < arrl; i++) {
+      var idx = arrl-i;
+
+      if(arr[idx]==256) {
+	if(idx==arrl) {
+	  break;
+	  return false;
+	} else {
+	  arr[idx] = 0;
+	  arr[idx-1]++;
+	}
+      }
+    }
+
+    yield arr;
+  }
+}
 
 function load_dictionary(fname) {
   const fs = require('fs');
@@ -58,15 +83,17 @@ function bytes_to_str(bytes) {
 }
 
 function brute_crack(c, max_size=10) {
-  var idx = [];
   var cbytes = str_to_bytes(c);
 
-  for(var key_length = 1; key_length < max_size; key_length++) {
-    idx = idx.concat([nlst]);
-    ks = cartesian(...idx);
+  for(var key_length = 3; key_length < max_size; key_length++) {
+    var kg = ks(key_length);
+    console.log("key size: "+key_length);
 
-    for(var kid = 0; kid < ks.length; kid++) {
-      var r = OTR.decode(ks[kid], cbytes, true);
+    while(k = kg.next()) {
+      if(kg.done)
+	return
+
+      var r = OTR.decode(k.value, cbytes, true);
       var rstr = bytes_to_str(r);
       var rstr_is_english = new LangDetect(rstr).is_english();
       if(rstr_is_english) {
@@ -75,11 +102,7 @@ function brute_crack(c, max_size=10) {
       }
     }
 
-    console.log(ks[0]);
   }
 }
-
-// console.log(hex_to_bytes(s2));
-// console.log(nlst[nlst.length-1]);
 
 brute_crack(s1, 11);

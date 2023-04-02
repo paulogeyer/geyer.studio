@@ -70,6 +70,10 @@ function hex_to_bytes(str) {
   return res;
 }
 
+function bytes_to_hex(bytes) {
+  return bytes.map(x => x.toString(16)).join('');
+}
+
 function str_to_bytes(str) {
   return str.split('').map(x => x.charCodeAt(0));
 }
@@ -86,7 +90,7 @@ function bytes_to_str(bytes) {
 function brute_crack(c, max_size=10) {
   var cbytes = str_to_bytes(c);
 
-  for(var key_length = 2; key_length < max_size; key_length++) {
+  for(var key_length = 4; key_length < max_size; key_length++) {
     var kg = ks(key_length);
     var counter = 0;
     console.log("key size: "+key_length);
@@ -106,7 +110,10 @@ function brute_crack(c, max_size=10) {
       if(rstr_is_english) {
 	console.log("found key: "+k.value);
 	console.log("decrypted text: "+rstr);
-
+	if(rstr=="dawn") {
+	  return None
+	  break
+	}
 	// var input = prompt("ok?");
 	// if(input=="y")
 	//   return true;
@@ -116,4 +123,16 @@ function brute_crack(c, max_size=10) {
   }
 }
 
-brute_crack(s2, 11);
+// brute_crack(s2, 11);
+// brute_crack("c294814d", 6);
+
+// 09e1c5f70a65ac519458e76ae156
+
+var d = str_to_bytes("dawn");
+// var ct = hex_to_bytes("09e1c5f70a65ac519458e7e53f36");
+var ct = hex_to_bytes("e7e53f36");
+
+var k = OTR.xor(d,ct);
+var r = OTR.xor(k,str_to_bytes("dusk"));
+console.log(r);
+console.log(bytes_to_hex(r));

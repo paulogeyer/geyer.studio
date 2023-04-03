@@ -64,14 +64,18 @@ s4 = "foobar baz qux"
 
 function hex_to_bytes(str) {
   var res = [];
-  for (var i = 0; i < str.length/2; i++) {
+  for (var i = 0; i < str.length; i+=2) {
     res.push(parseInt(str.slice(i,i+2), 16));
   }
   return res;
 }
 
 function bytes_to_hex(bytes) {
-  return bytes.map(x => x.toString(16)).join('');
+  var res = [];
+
+  for(var i = 0; i < bytes.length; i++)
+    res.push((bytes[i] < 16 ? '0' : '')+bytes[i].toString(16));
+  return res.join('');
 }
 
 function str_to_bytes(str) {
@@ -130,9 +134,19 @@ function brute_crack(c, max_size=10) {
 
 var d = str_to_bytes("dawn");
 // var ct = hex_to_bytes("09e1c5f70a65ac519458e7e53f36");
-var ct = hex_to_bytes("e7e53f36");
+var ct = hex_to_bytes("6c73d5240a948c86981bc294814d");
+var pt1 = str_to_bytes("attack at dawn");
 
-var k = OTR.xor(d,ct);
-var r = OTR.xor(k,str_to_bytes("dusk"));
-console.log(r);
-console.log(bytes_to_hex(r));
+var k = OTR.xor(pt1,ct);
+// var r = OTR.xor(k,str_to_bytes("dusk"));
+console.log(pt1);
+console.log(bytes_to_str(OTR.xor(ct,k)));
+
+var pt2 = str_to_bytes("attack at dusk");
+var ct4 = OTR.xor(pt2, k);
+
+console.log(bytes_to_hex(ct));
+console.log(bytes_to_hex(ct4));
+console.log(bytes_to_hex(OTR.xor(ct4,k)));
+// console.log(bytes_to_hex(ct));
+// console.log(bytes_to_hex(hex_to_bytes("09e1c5f70a65ac519458e7e53f36")));

@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "serve": "^14.2.0",
+    "serve-cli": "^0.2.0"
+  }
+}

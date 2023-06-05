@@ -27,12 +27,12 @@ section.sketches {
     flex-direction: row;
 }
 
-.p5sketch {
+.sketch {
     width: 30em;
     margin-right: 3em;
 }
 
-.p5sketch img {
+.sketch img {
     width: 100%;
 }
 

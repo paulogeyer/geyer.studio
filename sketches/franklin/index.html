@@ -6,9 +6,18 @@
   </head>
   <body style='margin : 0px; overflow: hidden;'>
     <a-scene embedded arjs>
-      <!-- create your content here. just a box for now -->
-      <a-box position='0 0.5 0' material='opacity: 0.5;'></a-box>
-      <!-- define a camera which will move according to the marker position -->
+
+      <a-plane position="0.5 0 0" rotation="0 90 0" width="1" height="1" color="green">
+      </a-plane>
+      <a-plane position="-0.5 0 0" rotation="0 -90 0" width="1" height="1" color="green">
+      </a-plane>
+      <a-plane position="0 0 -0.5" rotation="0 0 0" width="1" height="1" color="green">
+      </a-plane>
+      <a-plane position="0 -0.5 0.5" rotation="0 180 0" width="1" height="1" color="green">
+      </a-plane>
+      <a-plane position="0 0 0" rotation="90 0 0" width="1" height="1" color="green">
+      </a-plane>
+
       <a-marker-camera type="pattern" url="pattern-qrcode.patt"></a-marker-camera>
     </a-scene>
   </body>

@@ -6,15 +6,23 @@
   </head>
   <body style='margin : 0px; overflow: hidden;'>
     <a-scene embedded arjs>
-      <a-plane position="0.5 0 0" rotation="0 90 0" width="1" height="1" color="yellow">
+      <a-assets>
+	<img id="img1" src="imgs/imagem1.jpg">
+	<img id="img2" src="imgs/imagem2.jpg">
+	<img id="img3" src="imgs/imagem3.jpg">
+	<img id="img4" src="imgs/imagem4.jpg">
+	<img id="img5" src="imgs/imagem5.jpg">
+      </a-assets>
+
+      <a-plane position="0.5 0 0" rotation="0 90 0" width="1" height="1" src="#img1">
       </a-plane>
-      <a-plane position="-0.5 0 0" rotation="0 -90 0" width="1" height="1" color="green">
+      <a-plane position="-0.5 0 0" rotation="0 -90 0" width="1" height="1" src="#img2">
       </a-plane>
-      <a-plane position="0 0 -0.5" rotation="0 180 0" width="1" height="1" color="blue">
+      <a-plane position="0 0 -0.5" rotation="0 180 0" width="1" height="1" src="#img3">
       </a-plane>
-      <a-plane position="0 0 0.5" rotation="0 0 0" width="1" height="1" color="red">
+      <a-plane position="0 0 0.5" rotation="0 0 0" width="1" height="1" src="#img4">
       </a-plane>
-      <a-plane position="0 0.5 0" rotation="-90 0 0" width="1" height="1" color="green">
+      <a-plane position="0 0.5 0" rotation="-90 0 0" width="1" height="1" src="#img5">
       </a-plane>
 
       <a-marker-camera type="pattern" url="pattern-qrcode.patt"></a-marker-camera>

@@ -22,14 +22,29 @@ header ul li {
     list-style:none;
 }
 
-section.sketches {
-    display: flex;
-    flex-direction: row;
+@media only screen and (min-width:480px) {
+    .sketch h3 {
+	font-size: 3em;
+    }
+
+    .sketch {
+	margin-bottom: 2em;
+	margin-left: auto;
+	margin-right: auto;
+	width: 90%;
+    }
 }
 
-.sketch {
-    width: 30em;
-    margin-right: 3em;
+@media only screen and (min-width:1025px) {
+    section.sketches {
+	display: flex;
+	flex-direction: row;
+    }
+
+    .sketch {
+	flex: 30%;
+	margin-right: 3em;
+    }
 }
 
 .sketch img {
